@@ -1,0 +1,25 @@
+modLoader="javafml"
+loaderVersion="[35,)"
+license="All rights reserved"
+[[mods]]
+modId="renamob"
+version="1.0"
+displayName="Rena's Mobs"
+logoFile="examplemod.png"
+credits="Rena" 
+authors="Rena"
+description='''
+Mod creado por RenatiuX, agrega diversidad de entidades de la mitologia y ficticias
+'''
+[[dependencies.renamob]] #optional
+    modId="forge"
+    mandatory=true
+    versionRange="[35,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.renamob]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.4,1.17)"
+    ordering="NONE"
+    side="BOTH"
