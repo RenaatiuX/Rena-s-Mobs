@@ -14,7 +14,7 @@ public class RenaEntityRender extends MobRenderer<AmmytEntity, AmmytEntityModel>
 			"textures/entity/ammyt_entity.png");
 	
 	public RenaEntityRender(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new AmmytEntityModel(), 0.5f);
+		super(renderManagerIn, new AmmytEntityModel(), 0.7f);
 	}
 	
 	

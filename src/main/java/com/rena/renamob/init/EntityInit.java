@@ -16,8 +16,11 @@ public class EntityInit {
 	            RenaMob.MODID);
 
 	  public static final RegistryObject<EntityType<AmmytEntity>> AMMYT_ENTITY = ENTITY_TYPES
-			  .register("ammyt_entity", 
-					  () -> EntityType.Builder.<AmmytEntity>create(AmmytEntity::new, EntityClassification.CREATURE)
-					  .size(0.9f, 1.3f)
-					  .build(new ResourceLocation(RenaMob.MODID, "ammyt_entity").toString()));
+			  .register("ammyt_entity",
+					  	() -> EntityType.Builder.<AmmytEntity>create(AmmytEntity::new, EntityClassification.CREATURE)
+					  	.size(1.9f, 2.0f)
+					  	.build(new ResourceLocation(RenaMob.MODID, "ammyt_entity").toString()));
+	  
+	 
+	  
 }
