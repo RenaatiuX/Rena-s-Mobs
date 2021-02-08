@@ -4,10 +4,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.rena.renamob.entities.AmmytEntity;
-import com.rena.renamob.entity.render.RenaEntityRender;
 import com.rena.renamob.init.EntityInit;
 import com.rena.renamob.init.ItemInit;
 import com.rena.renamob.objects.item.ModSpawnEggItem;
+import com.rena.renamob.world.gen.ModEntityPlacement;
+import com.rena.renamob.world.gen.ModEntitySpawns;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
@@ -15,10 +16,9 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DeferredWorkQueue;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -48,29 +48,35 @@ public class RenaMob {
 	}
 	
 	
-	@SuppressWarnings("deprecation")
+	
 	private void setup(final FMLCommonSetupEvent event) {
-		DeferredWorkQueue.runLater(() -> {
-			GlobalEntityTypeAttributes.put(EntityInit.AMMYT_ENTITY.get(), AmmytEntity.setCustomAttributes().create());
-			
-
-		});
 		
+		ModEntityPlacement.spawnPlacement();
+		
+	}
+	
+	
+	public void onBiomeLoad(BiomeLoadingEvent event) {
+		ModEntitySpawns.onBiomesLoad(event);
 	}
 	
 	private void clientSetup(final FMLClientSetupEvent event) {
 		
-		
-		
-		RenderingRegistry.registerEntityRenderingHandler(EntityInit.AMMYT_ENTITY.get(), RenaEntityRender::new);
-		
+		event.enqueueWork(() -> {
+			
+			GlobalEntityTypeAttributes.put(EntityInit.AMMYT_ENTITY.get(), AmmytEntity.setCustomAttributes().create());
+			
+		});
 	}
+	
 	
 	@SubscribeEvent
 	public static void onRegisterEntities(final RegistryEvent.Register<EntityType<?>> event) 
 	{
 		ModSpawnEggItem.initSpawnEggs();
 	}
+	
+	
 	
 	public static class RenaItemGroup extends ItemGroup 
 	{
@@ -84,7 +90,7 @@ public class RenaMob {
 		@Override
 		public ItemStack createIcon() 
 		{
-			return new ItemStack(ItemInit.INGOT_COPPER.get());
+			return new ItemStack(ItemInit.RENA_TAB.get());
 		}
 	}
 	

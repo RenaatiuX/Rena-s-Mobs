@@ -1,9 +1,13 @@
 package com.rena.renamob.entities;
 
+
+
+
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
@@ -16,6 +20,7 @@ import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -86,13 +91,26 @@ public class AmmytEntity extends MonsterEntity{
 	}
 	
 	
-	
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		
 		return 0.9F * sizeIn.height;
 	}
-
+	
+	
+	@Override
+	public boolean canSpawn(IWorld worldIn, SpawnReason spawnReasonIn) {
+		
+		return super.canSpawn(worldIn, spawnReasonIn);
+	}
+	
+	
+	@Override
+	public boolean canDespawn(double distanceToClosestPlayer) {
+		
+		return false;
+	}
+	
 	
 
 }
