@@ -17,6 +17,6 @@ public class ModEntitySpawns {
 	public static void onBiomesLoad(BiomeLoadingEvent event) {
 		
         if (event.getCategory() == Biome.Category.DESERT)
-            event.getSpawns().getSpawner(EntityClassification.AMBIENT).add(new MobSpawnInfo.Spawners(EntityInit.AMMYT_ENTITY.get(), 100, 1, 10));
+            event.getSpawns().getSpawner(EntityClassification.MONSTER).add(new MobSpawnInfo.Spawners(EntityInit.AMMYT_ENTITY.get(), 100, 1, 10));
     }
 }
