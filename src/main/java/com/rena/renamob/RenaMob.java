@@ -55,7 +55,7 @@ public class RenaMob {
 		
 	}
 	
-	
+	@SubscribeEvent
 	public void onBiomeLoad(BiomeLoadingEvent event) {
 		ModEntitySpawns.onBiomesLoad(event);
 	}

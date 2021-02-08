@@ -101,7 +101,7 @@ public class AmmytEntity extends MonsterEntity{
 	@Override
 	public boolean canSpawn(IWorld worldIn, SpawnReason spawnReasonIn) {
 		
-		return super.canSpawn(worldIn, spawnReasonIn);
+		return true;
 	}
 	
 	

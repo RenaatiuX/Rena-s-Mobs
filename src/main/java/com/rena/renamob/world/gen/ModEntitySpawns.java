@@ -8,13 +8,12 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = RenaMob.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModEntitySpawns {
 	
-	@SubscribeEvent
+	
 	public static void onBiomesLoad(BiomeLoadingEvent event) {
 		
         if (event.getCategory() == Biome.Category.DESERT)
