@@ -1,7 +1,7 @@
 package com.rena.renamob.entity.model;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import com.rena.renamob.entities.CalamarAgresivo;
+import com.rena.renamob.entities.CalamarAgresivoEntity;
 
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 // Paste this class into your mod and generate all required imports
 
 
-public class CalamarAgresivoModel extends EntityModel<CalamarAgresivo> {
+public class CalamarAgresivoModel extends EntityModel<CalamarAgresivoEntity> {
 	private final ModelRenderer Cabeza;
 	private final ModelRenderer TentaculoIzquierdo;
 	private final ModelRenderer cube_r1;
@@ -428,7 +428,7 @@ public class CalamarAgresivoModel extends EntityModel<CalamarAgresivo> {
 	}
 
 	@Override
-	public void setRotationAngles(CalamarAgresivo entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,
+	public void setRotationAngles(CalamarAgresivoEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,
 			float netHeadYaw, float headPitch) {
 		// TODO Auto-generated method stub
 		

@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.rena.renamob.entities.AmmytEntity;
-import com.rena.renamob.entities.CalamarAgresivo;
+import com.rena.renamob.entities.CalamarAgresivoEntity;
 import com.rena.renamob.init.EntityInit;
 import com.rena.renamob.init.ItemInit;
 import com.rena.renamob.world.gen.ModEntityPlacement;
@@ -63,7 +63,7 @@ public class RenaMob {
 		event.enqueueWork(() -> {
 			
 			GlobalEntityTypeAttributes.put(EntityInit.AMMYT_ENTITY.get(), AmmytEntity.setCustomAttributes().create());
-			GlobalEntityTypeAttributes.put(EntityInit.CALAMAR_AGRESIVO.get(), CalamarAgresivo.setCustomAttributes().create());
+			GlobalEntityTypeAttributes.put(EntityInit.CALAMAR_AGRESIVO.get(), CalamarAgresivoEntity.setCustomAttributes().create());
 			
 		});
 	}
