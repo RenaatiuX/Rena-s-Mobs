@@ -87,12 +87,26 @@ public class ItemInit {
 	public static final RegistryObject<Item> CUERNO_UNICORNIO = ITEMS.register("cuerno_unicornio", 
 			() -> new Item(new Item.Properties().group(RenaMob.RENAITEM_GROUP)));
 	
-	public static final RegistryObject<ModSpawnEggItem> CALAMAR_AGRESIVO_EGG = ITEMS.register("calamar_agresivo_spawn_egg",
-			() -> new ModSpawnEggItem(EntityInit.CALAMAR_AGRESIVO, 0xC8ED63, 0x13142316,
-					new Item.Properties().group(RenaMob.RENAITEM_GROUP).maxStackSize(16)));
 	
-	public static final RegistryObject<ModSpawnEggItem> AMMYT_EGG = ITEMS.register("ammyt_spawn_egg",
-			() -> new ModSpawnEggItem(EntityInit.AMMYT_ENTITY, 0xFF325F, 0x16777118,
+	public static final RegistryObject<ModSpawnEggItem> CALAMAR_AGRESIVO_EGG = ITEMS.register("calamar_agresivo_spawn_egg",
+			() -> new ModSpawnEggItem(EntityInit.CALAMAR_AGRESIVO, 0x336699, 0x669999,
 					new Item.Properties().group(RenaMob.RENAITEM_GROUP).maxStackSize(16)));
+
+    
+	public static final RegistryObject<ModSpawnEggItem> AMMYT_EGG = ITEMS.register("ammyt_spawn_egg", 
+    		() -> new ModSpawnEggItem(EntityInit.AMMYT_ENTITY, 0x2E2631, 0x652833, 
+    				new Item.Properties().group(RenaMob.RENAITEM_GROUP)));
+    
+
+	
+
+	
+	
+	
+    
+	
+    
+	
+	
 	
 }

@@ -7,16 +7,13 @@ import com.rena.renamob.entities.AmmytEntity;
 import com.rena.renamob.entities.CalamarAgresivo;
 import com.rena.renamob.init.EntityInit;
 import com.rena.renamob.init.ItemInit;
-import com.rena.renamob.objects.item.ModSpawnEggItem;
 import com.rena.renamob.world.gen.ModEntityPlacement;
 import com.rena.renamob.world.gen.ModEntitySpawns;
 
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -71,12 +68,6 @@ public class RenaMob {
 		});
 	}
 	
-	
-	@SubscribeEvent
-	public static void onRegisterEntities(final RegistryEvent.Register<EntityType<?>> event) 
-	{
-		ModSpawnEggItem.initSpawnEggs();
-	}
 	
 	
 	
