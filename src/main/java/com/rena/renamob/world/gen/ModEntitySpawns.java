@@ -18,5 +18,8 @@ public class ModEntitySpawns {
 		
         if (event.getCategory() == Biome.Category.DESERT)
             event.getSpawns().getSpawner(EntityClassification.MONSTER).add(new MobSpawnInfo.Spawners(EntityInit.AMMYT_ENTITY.get(), 100, 1, 10));
+        
+        if (event.getCategory() == Biome.Category.OCEAN)
+            event.getSpawns().getSpawner(EntityClassification.MONSTER).add(new MobSpawnInfo.Spawners(EntityInit.CALAMAR_AGRESIVO.get(), 100, 1, 10));
     }
 }

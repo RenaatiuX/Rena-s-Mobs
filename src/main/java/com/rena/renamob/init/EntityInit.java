@@ -2,6 +2,7 @@ package com.rena.renamob.init;
 
 import com.rena.renamob.RenaMob;
 import com.rena.renamob.entities.AmmytEntity;
+import com.rena.renamob.entities.CalamarAgresivo;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
@@ -22,6 +23,13 @@ public class EntityInit {
 					  	() -> EntityType.Builder.<AmmytEntity>create(AmmytEntity::new, EntityClassification.CREATURE)
 					  	.size(1.9f, 2.0f)
 					  	.build(new ResourceLocation(RenaMob.MODID, "ammyt_entity").toString()));
+	  
+	  
+	  public static final RegistryObject<EntityType<CalamarAgresivo>> CALAMAR_AGRESIVO = ENTITY_TYPES
+			  .register("calamar_entity",
+					  	() -> EntityType.Builder.<CalamarAgresivo>create(CalamarAgresivo::new, EntityClassification.WATER_CREATURE)
+					  	.size(1.0f, 2.5f)
+					  	.build(new ResourceLocation(RenaMob.MODID, "calamar_entity").toString()));
 	  
 	  @SuppressWarnings("unused")
 	  private static <T extends Entity> RegistryObject<EntityType<T>> register(String key, EntityType.IFactory<T> factoryIn, EntityClassification classificationIn, float size1, float size2) {

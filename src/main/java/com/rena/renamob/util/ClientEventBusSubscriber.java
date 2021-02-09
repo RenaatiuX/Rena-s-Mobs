@@ -1,6 +1,7 @@
 package com.rena.renamob.util;
 
 import com.rena.renamob.RenaMob;
+import com.rena.renamob.entity.render.CalamarAgresivoRender;
 import com.rena.renamob.entity.render.RenaEntityRender;
 import com.rena.renamob.init.EntityInit;
 
@@ -17,6 +18,7 @@ public class ClientEventBusSubscriber {
 	 public static void onClientSetup(FMLClientSetupEvent event) {
 		 
 		 RenderingRegistry.registerEntityRenderingHandler(EntityInit.AMMYT_ENTITY.get(), RenaEntityRender::new);
+		 RenderingRegistry.registerEntityRenderingHandler(EntityInit.CALAMAR_AGRESIVO.get(), CalamarAgresivoRender::new);
 		 
 	 }
 	 

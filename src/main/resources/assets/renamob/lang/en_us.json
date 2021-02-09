@@ -2,7 +2,9 @@
 	"item.renamob.ingot_copper": "Lingote de Cobre",
 	"itemGroup.renatab": "Rena's Mobs",
 	"entity.renamob.ammyt_entity":"Ammyt",
-	"item.renamob.ammyt_spawn_egg":"Ammyt Egg" 
+	"entity.renamob.calamar_entity":"Calamar Agresivo",
+	"item.renamob.ammyt_spawn_egg":"Ammyt Egg" ,
+	"item.renamob.calamar_agresivo_spawn_egg":"Calamar Agresivo Egg" 
 	
 	
 }
