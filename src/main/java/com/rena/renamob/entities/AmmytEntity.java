@@ -6,7 +6,6 @@ package com.rena.renamob.entities;
 
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -61,7 +60,7 @@ public class AmmytEntity extends MonsterEntity{
 	
 	public static AttributeModifierMap.MutableAttribute setCustomAttributes()
 	{
-		return MobEntity.func_233666_p_()
+		return MonsterEntity.func_233666_p_()
 				.createMutableAttribute(Attributes.MAX_HEALTH, 60.0D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 5.0D)
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 64.0D)

@@ -20,14 +20,14 @@ public class EntityInit {
 
 	  public static final RegistryObject<EntityType<AmmytEntity>> AMMYT_ENTITY = ENTITY_TYPES
 			  .register("ammyt_entity",
-					  	() -> EntityType.Builder.<AmmytEntity>create(AmmytEntity::new, EntityClassification.CREATURE)
+					  	() -> EntityType.Builder.<AmmytEntity>create(AmmytEntity::new, EntityClassification.MONSTER)
 					  	.size(1.9f, 2.0f)
 					  	.build(new ResourceLocation(RenaMob.MODID, "ammyt_entity").toString()));
 	  
 	  public static final RegistryObject<EntityType<CalamarAgresivoEntity>> CALAMAR_AGRESIVO = ENTITY_TYPES
 			  .register("calamar_agresivo",
-					  	() -> EntityType.Builder.<CalamarAgresivoEntity>create(CalamarAgresivoEntity::new, EntityClassification.CREATURE)
-					  	.size(1.0f, 2.0f)
+					  	() -> EntityType.Builder.<CalamarAgresivoEntity>create(CalamarAgresivoEntity::new, EntityClassification.MONSTER)
+					  	.size(1.2f, 0.6f)
 					  	.build(new ResourceLocation(RenaMob.MODID, "calamar_agresivo").toString()));
 	  
 	 

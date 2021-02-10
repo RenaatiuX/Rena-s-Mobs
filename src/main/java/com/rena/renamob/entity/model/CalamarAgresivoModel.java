@@ -1,4 +1,9 @@
 package com.rena.renamob.entity.model;
+
+
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableList.Builder;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.rena.renamob.entities.CalamarAgresivoEntity;
@@ -12,6 +17,8 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 
 
 public class CalamarAgresivoModel extends EntityModel<CalamarAgresivoEntity> {
+	private final ImmutableList<ModelRenderer> field_228296_f_;
+	
 	private final ModelRenderer Cabeza;
 	private final ModelRenderer TentaculoIzquierdo;
 	private final ModelRenderer cube_r1;
@@ -69,6 +76,7 @@ public class CalamarAgresivoModel extends EntityModel<CalamarAgresivoEntity> {
 	public CalamarAgresivoModel() {
 		textureWidth = 64;
 		textureHeight = 64;
+		
 
 		Cabeza = new ModelRenderer(this);
 		Cabeza.setRotationPoint(0.0F, 11.0F, 0.0F);
@@ -93,6 +101,8 @@ public class CalamarAgresivoModel extends EntityModel<CalamarAgresivoEntity> {
 		Cabeza.setTextureOffset(26, 30).addBox(4.0F, -36.0F, 3.0F, 1.0F, 9.0F, 0.0F, 0.0F, false);
 		Cabeza.setTextureOffset(18, 2).addBox(-1.0F, -19.0F, -0.4F, 2.0F, 2.0F, 1.0F, 0.0F, false);
 		Cabeza.setTextureOffset(18, 0).addBox(-1.5F, -20.0F, -0.5F, 3.0F, 1.0F, 1.0F, 0.0F, false);
+		this.Cabeza.rotationPointY += 8.0F;
+
 
 		TentaculoIzquierdo = new ModelRenderer(this);
 		TentaculoIzquierdo.setRotationPoint(1.75F, -1.4688F, 1.5F);
@@ -409,6 +419,12 @@ public class CalamarAgresivoModel extends EntityModel<CalamarAgresivoEntity> {
 		TentaculoAtrasDere.addChild(cube_r48);
 		setRotationAngle(cube_r48, 0.0F, 0.0F, -0.7854F);
 		cube_r48.setTextureOffset(36, 16).addBox(-0.5F, 1.0F, 0.5F, 1.0F, 1.0F, 0.0F, 0.0F, false);
+		
+		 Builder<ModelRenderer> builder = ImmutableList.builder();
+	      builder.add(this.Cabeza);
+	      this.field_228296_f_ = builder.build();
+		
+		
 	}
 
 
@@ -433,4 +449,12 @@ public class CalamarAgresivoModel extends EntityModel<CalamarAgresivoEntity> {
 		// TODO Auto-generated method stub
 		
 	}
+	
+
+	public Iterable<ModelRenderer> getParts() {
+	      return this.field_228296_f_;
+	   }
+	
+
+	
 }
