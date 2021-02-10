@@ -4,11 +4,10 @@ package com.rena.renamob.entities;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockState;
+import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
@@ -23,12 +22,10 @@ import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.potion.Effects;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -36,12 +33,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class CalamarAgresivoEntity extends WaterMobEntity {
+public class CalamarAgresivoEntity extends MonsterEntity {
 
 	public float squidPitch;
 	   public float prevSquidPitch;
@@ -59,24 +57,66 @@ public class CalamarAgresivoEntity extends WaterMobEntity {
 	   private float randomMotionVecZ;
 	   
 	   
-	   public CalamarAgresivoEntity(EntityType<? extends CalamarAgresivoEntity> type, World worldIn) {
-			 super(type, worldIn);
-		      this.rand.setSeed((long)this.getEntityId());
-		      this.rotationVelocity = 1.0F / (this.rand.nextFloat() + 1.0F) * 0.2F;
+	   public CalamarAgresivoEntity(EntityType<? extends MonsterEntity> type, World p_i48565_2_) {
+			 super(type, p_i48565_2_);
+			 this.setPathPriority(PathNodeType.WATER, 0.0F);
+		     this.rand.setSeed((long)this.getEntityId());
+		     this.rotationVelocity = 1.0F / (this.rand.nextFloat() + 1.0F) * 0.2F;
+		     this.experienceValue = 5;
 		}
+	   
+	   public boolean canBreatheUnderwater() {
+		      return true;
+		   }
+	   
+	   public CreatureAttribute getCreatureAttribute() {
+		      return CreatureAttribute.WATER;
+		   }
+	   
+	   public boolean isNotColliding(IWorldReader worldIn) {
+		      return worldIn.checkNoEntityCollision(this);
+		   }
+	   
+	   protected void updateAir(int p_209207_1_) {
+		      if (this.isAlive() && !this.isInWaterOrBubbleColumn()) {
+		         this.setAir(p_209207_1_ - 1);
+		         if (this.getAir() == -20) {
+		            this.setAir(0);
+		            this.attackEntityFrom(DamageSource.DROWN, 2.0F);
+		         }
+		      } else {
+		         this.setAir(300);
+		      }
 
-	  
-
+		   }
+	   
+	   public void baseTick() {
+		      int i = this.getAir();
+		      super.baseTick();
+		      this.updateAir(i);
+		   }
+	   
+	   public boolean isPushedByWater() {
+		      return false;
+		   }
+	   
+	   public boolean canBeLeashedTo(PlayerEntity player) {
+		      return false;
+		   }
+	   
+	   @Override
 	   protected void registerGoals() {
+		  super.registerGoals();
 	      this.goalSelector.addGoal(0, new CalamarAgresivoEntity.MoveRandomGoal(this));
-	      this.goalSelector.addGoal(1, new CalamarAgresivoEntity.FleeGoal());
 	      this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 0.6f, true));
 	      this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 0.6F, 7));
-	      this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 15.0F));
+	      this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 12.0F));
 	      this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
 	      this.goalSelector.addGoal(8, new FollowBoatGoal(this));
-	      this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
+	      
+	      this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 	      this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+	      
 	   }
 
 	   public static AttributeModifierMap.MutableAttribute setCustomAttributes()
@@ -248,71 +288,6 @@ public class CalamarAgresivoEntity extends WaterMobEntity {
 
 	   public boolean hasMovementVector() {
 	      return this.randomMotionVecX != 0.0F || this.randomMotionVecY != 0.0F || this.randomMotionVecZ != 0.0F;
-	   }
-
-	   class FleeGoal extends Goal {
-	      private int tickCounter;
-
-	      private FleeGoal() {
-	      }
-
-	      /**
-	       * Returns whether execution should begin. You can also read and cache any state necessary for execution in this
-	       * method as well.
-	       */
-	      public boolean shouldExecute() {
-	         LivingEntity livingentity = CalamarAgresivoEntity.this.getRevengeTarget();
-	         if (CalamarAgresivoEntity.this.isInWater() && livingentity != null) {
-	            return CalamarAgresivoEntity.this.getDistanceSq(livingentity) < 100.0D;
-	         } else {
-	            return false;
-	         }
-	      }
-
-	      /**
-	       * Execute a one shot task or start executing a continuous task
-	       */
-	      public void startExecuting() {
-	         this.tickCounter = 0;
-	      }
-
-	      /**
-	       * Keep ticking a continuous task that has already been started
-	       */
-	      public void tick() {
-	         ++this.tickCounter;
-	         LivingEntity livingentity = CalamarAgresivoEntity.this.getRevengeTarget();
-	         if (livingentity != null) {
-	            Vector3d vector3d = new Vector3d(CalamarAgresivoEntity.this.getPosX() - livingentity.getPosX(), CalamarAgresivoEntity.this.getPosY() - livingentity.getPosY(), CalamarAgresivoEntity.this.getPosZ() - livingentity.getPosZ());
-	            BlockState blockstate = CalamarAgresivoEntity.this.world.getBlockState(new BlockPos(CalamarAgresivoEntity.this.getPosX() + vector3d.x, CalamarAgresivoEntity.this.getPosY() + vector3d.y, CalamarAgresivoEntity.this.getPosZ() + vector3d.z));
-	            FluidState fluidstate = CalamarAgresivoEntity.this.world.getFluidState(new BlockPos(CalamarAgresivoEntity.this.getPosX() + vector3d.x, CalamarAgresivoEntity.this.getPosY() + vector3d.y, CalamarAgresivoEntity.this.getPosZ() + vector3d.z));
-	            if (fluidstate.isTagged(FluidTags.WATER) || blockstate.isAir()) {
-	               double d0 = vector3d.length();
-	               if (d0 > 0.0D) {
-	                  vector3d.normalize();
-	                  float f = 3.0F;
-	                  if (d0 > 5.0D) {
-	                     f = (float)((double)f - (d0 - 5.0D) / 5.0D);
-	                  }
-
-	                  if (f > 0.0F) {
-	                     vector3d = vector3d.scale((double)f);
-	                  }
-	               }
-
-	               if (blockstate.isAir()) {
-	                  vector3d = vector3d.subtract(0.0D, vector3d.y, 0.0D);
-	               }
-
-	               CalamarAgresivoEntity.this.setMovementVector((float)vector3d.x / 20.0F, (float)vector3d.y / 20.0F, (float)vector3d.z / 20.0F);
-	            }
-
-	            if (this.tickCounter % 10 == 5) {
-	            	CalamarAgresivoEntity.this.world.addParticle(ParticleTypes.BUBBLE, CalamarAgresivoEntity.this.getPosX(), CalamarAgresivoEntity.this.getPosY(), CalamarAgresivoEntity.this.getPosZ(), 0.0D, 0.0D, 0.0D);
-	            }
-
-	         }
-	      }
 	   }
 
 	   class MoveRandomGoal extends Goal {
