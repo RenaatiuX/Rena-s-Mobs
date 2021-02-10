@@ -4,6 +4,7 @@ package com.rena.renamob.entities;
 
 import java.util.Random;
 
+
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
@@ -13,18 +14,20 @@ import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.FollowBoatGoal;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.MoveTowardsTargetGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
+import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -41,7 +44,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class CalamarAgresivoEntity extends MonsterEntity {
 
-	public float squidPitch;
+	   public float squidPitch;
 	   public float prevSquidPitch;
 	   public float squidYaw;
 	   public float prevSquidYaw;
@@ -65,9 +68,24 @@ public class CalamarAgresivoEntity extends MonsterEntity {
 		     this.experienceValue = 5;
 		}
 	   
+	   @Override
+		public boolean attackEntityAsMob(Entity entity) {
+			if (canEntityBeSeen(entity)) {
+				if (super.attackEntityAsMob(entity))
+					return true;
+			}
+			return false;
+		}
+
+	   
 	   public boolean canBreatheUnderwater() {
 		      return true;
 		   }
+	   
+	   @Override
+	    protected PathNavigator createNavigator(World world){
+	        return new SwimmerPathNavigator(this, world);
+	    }
 	   
 	   public CreatureAttribute getCreatureAttribute() {
 		      return CreatureAttribute.WATER;
@@ -105,19 +123,24 @@ public class CalamarAgresivoEntity extends MonsterEntity {
 		   }
 	   
 	   @Override
-	   protected void registerGoals() {
-		  super.registerGoals();
-	      this.goalSelector.addGoal(0, new CalamarAgresivoEntity.MoveRandomGoal(this));
-	      this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 0.6f, true));
-	      this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 0.6F, 7));
-	      this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 12.0F));
-	      this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
-	      this.goalSelector.addGoal(8, new FollowBoatGoal(this));
-	      
-	      this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
-	      this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-	      
-	   }
+		protected void registerGoals() {
+			super.registerGoals();
+			
+			
+			this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 0.8f, true));
+			this.goalSelector.addGoal(2, new MoveTowardsTargetGoal(this, 0.9D, 32.0F));
+			this.goalSelector.addGoal(3, new CalamarAgresivoEntity.MoveRandomGoal(this));
+			this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 0.6F, 7));
+			this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 12.0F));
+	        this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
+	        
+	        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+	        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+	        
+	       
+	        
+	        
+		}
 
 	   public static AttributeModifierMap.MutableAttribute setCustomAttributes()
 		{
@@ -145,10 +168,12 @@ public class CalamarAgresivoEntity extends MonsterEntity {
 	      return SoundEvents.ENTITY_SQUID_DEATH;
 	   }
 	   
-	   public boolean attackEntityAsMob(Entity entityIn) {
-	        
-	        return true;
-	    }
+	   @Override
+		public boolean canSpawn(IWorld worldIn, SpawnReason spawnReasonIn) {
+			
+			return true;
+		}
+	   
 
 	   /**
 	    * Returns the volume for the sounds this mob makes.
