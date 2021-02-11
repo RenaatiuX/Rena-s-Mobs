@@ -44,7 +44,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class CalamarAgresivoEntity extends MonsterEntity {
 
-	   public float squidPitch;
+	   public CalamarAgresivoEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+		 super(type, worldIn);
+		 this.setPathPriority(PathNodeType.WATER, 0.0F);
+	     this.rand.setSeed((long)this.getEntityId());
+	     this.rotationVelocity = 1.0F / (this.rand.nextFloat() + 1.0F) * 0.2F;
+	     this.experienceValue = 5;
+	}
+
+	public float squidPitch;
 	   public float prevSquidPitch;
 	   public float squidYaw;
 	   public float prevSquidYaw;
@@ -60,13 +68,7 @@ public class CalamarAgresivoEntity extends MonsterEntity {
 	   private float randomMotionVecZ;
 	   
 	   
-	   public CalamarAgresivoEntity(EntityType<? extends MonsterEntity> type, World p_i48565_2_) {
-			 super(type, p_i48565_2_);
-			 this.setPathPriority(PathNodeType.WATER, 0.0F);
-		     this.rand.setSeed((long)this.getEntityId());
-		     this.rotationVelocity = 1.0F / (this.rand.nextFloat() + 1.0F) * 0.2F;
-		     this.experienceValue = 5;
-		}
+	  
 	   
 	   @Override
 		public boolean attackEntityAsMob(Entity entity) {
@@ -258,7 +260,7 @@ public class CalamarAgresivoEntity extends MonsterEntity {
 	    * Called when the entity is attacked.
 	    */
 	   public boolean attackEntityFrom(DamageSource source, float amount) {
-	      if (super.attackEntityFrom(source, amount) && this.getRevengeTarget() != null) {
+	      if (super.attackEntityFrom(source, amount) ) {
 	         this.squirtInk();
 	         return true;
 	      } else {
