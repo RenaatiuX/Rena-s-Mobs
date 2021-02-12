@@ -24,9 +24,9 @@ public class CalamarAgresivoRender extends MobRenderer<CalamarAgresivoEntity, Ca
 	
 	public ResourceLocation getEntityTexture(CalamarAgresivoEntity entity) {
 		return TEXTURE;
-	};
+	}
 	
-	  protected void applyRotations(CalamarAgresivoEntity entityLiving, MatrixStack matrixStackIn, float ageInTicks, float rotationYaw, float partialTicks) {
+	protected void applyRotations(SquidEntity entityLiving, MatrixStack matrixStackIn, float ageInTicks, float rotationYaw, float partialTicks) {
 	      float f = MathHelper.lerp(partialTicks, entityLiving.prevSquidPitch, entityLiving.squidPitch);
 	      float f1 = MathHelper.lerp(partialTicks, entityLiving.prevSquidYaw, entityLiving.squidYaw);
 	      matrixStackIn.translate(0.0D, 0.5D, 0.0D);
@@ -34,13 +34,15 @@ public class CalamarAgresivoRender extends MobRenderer<CalamarAgresivoEntity, Ca
 	      matrixStackIn.rotate(Vector3f.XP.rotationDegrees(f));
 	      matrixStackIn.rotate(Vector3f.YP.rotationDegrees(f1));
 	      matrixStackIn.translate(0.0D, (double)-1.2F, 0.0D);
-	   };
+	   }
+	
+
 
 	   /**
 	    * Defines what float the third param in setRotationAngles of ModelBase is
 	    */
 	   protected float handleRotationFloat(SquidEntity livingBase, float partialTicks) {
 	      return MathHelper.lerp(partialTicks, livingBase.lastTentacleAngle, livingBase.tentacleAngle);
-	   };
+	   }
 
 }

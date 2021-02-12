@@ -11,7 +11,7 @@ public class ModEntityPlacement {
 	
 	public static void spawnPlacement() {
         EntitySpawnPlacementRegistry.register(EntityInit.AMMYT_ENTITY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AmmytEntity::canSpawnOn);
-        EntitySpawnPlacementRegistry.register(EntityInit.CALAMAR_AGRESIVO.get(), EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CalamarAgresivoEntity::func_223365_b);
+        EntitySpawnPlacementRegistry.register(EntityInit.CALAMAR_AGRESIVO.get(), EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CalamarAgresivoEntity::canSpawnOn);
        
     }
 	
